@@ -1,0 +1,95 @@
+﻿@using PatientsPortal.Methods
+@model PatientsPortalModel.ViewModels.VisitViewModels.SearchVisitViewModel
+@{
+    ViewBag.Title = "Wizyty";
+}
+
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h2>Szukaj wizyty</h2>
+        @using (Html.BeginForm("Search"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+            if (TempData["VisitWithoutDates"] != null)
+            {
+                 <p class="alert alert-warning" id="successMessage">@TempData["VisitWithoutDates"]</p>
+            }
+            if (TempData["NoVisits"] != null)
+            {
+                 <p class="alert alert-warning" id="successMessage">@TempData["NoVisits"]</p>
+            }
+            <div class="form-group">
+                @Html.LabelFor(m => m.Specialization)
+                @Html.DropDownListFor(m => m.Specialization,
+                    Model.Doctors.Select(c => new SelectListItem
+                    {
+                        Text = c.Specialization, Value = c.Specialization
+                    }),
+                    new { @class = "form-control selectpicker", data_live_search = "true", data_size = "4" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.VisitStartDate)
+                <div class="input-group">
+                    @Html.EditorFor(m => m.VisitStartDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.VisitEndDate)
+                <div class="input-group">
+                    @Html.EditorFor(m => m.VisitEndDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            @Html.Label("Godziny wizyty")
+            <div class="form-group">
+                @Html.RadioButton("searchBy", "8.00 - 12.00", new { @checked = true }) 8.00 - 12.00
+                @Html.RadioButton("searchBy", "12.00 - 16.00") 12.00 - 16.00
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Szukaj</button>
+            </div>
+
+        }
+    </div>
+</div>
+@if (Model.Visits.Count() == 0)
+{
+
+}
+else
+{
+    <div class="row page-box">
+        <div class="col-sm-12">
+            
+            @(Html.Grid(Model.Visits.OrderBy(p => p.VisitDate).Where(p => p.IsReserved == false).Take(300))
+                  .Build(columns =>
+                  {
+                      columns.Add(model => model.Doctor.FirstName + ' ' + model.Doctor.LastName).Titled("Lekarz");
+                      columns.Add(model => model.Doctor.Specialization).Titled("Specjalizacja");
+                      columns.Add(model => model.VisitDate).Titled("Data").Formatted("{0:dd/MM/yyyy}");
+                      columns.Add(model => Methods.ConvertIntToTimeString(model.VisitTime)).Titled("Godzina");
+                      columns.Add()
+                          .RenderedAs(model => Html.ActionLink("Rezerwuj",
+                              "Create", "Visit", new {id = model.Id}, null));
+
+                  })
+                  .Empty("Brak wyników")
+                  .Pageable(
+                      pager => {
+                            pager.PagesToDisplay = 3;
+                            pager.CurrentPage = 1;
+                            pager.RowsPerPage = 40;
+                      })
+                  .RowAttributed(model => new { data_id = model.Id })
+                  )
+
+        </div>
+    </div>
+}
+

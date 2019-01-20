@@ -1,0 +1,69 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.ExaminationViewModels.ExaminationsViewModel
+@{
+    ViewBag.Title = "Badania";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["ExaminationCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["ExaminationCreated"]</p>
+        }
+        @if (TempData["ExaminationUpdated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["ExaminationUpdated"]</p>
+        }
+        @if (TempData["ExaminationNotCreated"] != null)
+        {
+            <p class="alert alert-warning" id="warningMessage">@TempData["ExaminationNotCreated"]</p>
+        }
+        <h2>Badania</h2>
+
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Registration"))
+        {
+            @Html.ActionLink("Nowe badanie", "Create", "Examination", new
+            {
+                @class = "btn btn-primary",
+                style = "margin-bottom: 10px;"
+            })
+        }
+
+
+        @(Html.Grid(Model.Examinations)
+              .Build(columns =>
+              {
+                  columns.Add(model => model.User.FirstName + ' ' + model.User.LastName)
+                      .Titled("Imię i nazwisko");
+                  columns.Add(model => model.ExaminationName).Titled("Badanie");
+                  columns.Add(model => model.Result + ' ' + model.Unit.Value).Titled("Wynik");
+                  columns.Add(model => model.Norm + ' ' + model.Unit.Value).Titled("Norma");
+                  columns.Add(model => model.Doctor.FirstName + ' ' + model.Doctor.LastName)
+                      .Titled("Lekarz");
+                  columns.Add(model => model.ExaminationDate).Titled("Data wykonania badania").Formatted("{0:dd/MM/yyyy}");
+
+                  if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                  {
+                      columns.Add()
+                          .RenderedAs(model => Html.ActionLink("Edytuj",
+                              "Edit", "Examination", new {id = model.Id}, null));
+                      columns.Add()
+                          .RenderedAs(model => Html.ActionLink("Szczegóły",
+                              "Details", "Examination", new {id = model.Id}, null));
+                  }
+              })
+              .Empty("Brak wyników")
+              .Filterable()
+              .Sortable()
+              .Pageable(
+                  pager =>
+                  {
+                      pager.PagesToDisplay = 3;
+                      pager.CurrentPage = 1;
+                      pager.RowsPerPage = 10;
+                  })
+              .RowAttributed(model => new {data_id = model.Id})
+              )
+
+    </div>
+</div>

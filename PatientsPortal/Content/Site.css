@@ -1,0 +1,81 @@
+﻿
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+body {
+    background-color: #e4f3fe;
+    padding-top: 60px;
+}
+
+.page-box {
+    background-color: white;
+    border: #d3d1d1 1px solid;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+label {
+    color: #243672;
+}
+
+textarea.form-control {
+    height: 240px;
+}
+
+.modal-registration {
+    display: block !important;
+}
+
+.modal-dialog-registration {
+    overflow-y: initial !important
+}
+
+.modal-body-registration {
+    height: 350px;
+    overflow-y: auto;
+}
+
+.k-invisible {
+    display: none;
+}
+
+.k-visible {
+    display: block;
+}
+
+.validation-summary-errors ul {
+    list-style-type: none;
+}
+
+tbody td tr {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.users__bar {
+    height: 370px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chat__main {
+    height: 550px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.__chat__par__ div {
+    height: auto;
+}

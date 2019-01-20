@@ -1,0 +1,50 @@
+﻿@using PatientsPortal.Methods
+@model PatientsPortalModel.ViewModels.VisitViewModels.CancelVisitViewModel
+@{
+    ViewBag.Title = "Wizyty";
+}
+
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h2>Anulacja wizyty</h2>
+        @using (Html.BeginForm("Cancel"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.DoctorId)
+            @Html.HiddenFor(m => m.VisitTime)
+            @Html.HiddenFor(m => m.VisitDate)
+            @Html.HiddenFor(m => m.Specialization)
+            @Html.HiddenFor(m => m.UserId)
+
+            <div class="form-group">
+                <h4>Imię i nazwisko pacjenta</h4>
+                @Model.User.FirstName @Model.User.LastName
+            </div>
+            <div class="form-group">
+                <h4>Imię i nazwisko lekarza</h4>
+                @Model.Doctor.FirstName @Model.Doctor.LastName
+            </div>
+            <div class="form-group">
+                <h4>Specjalizacja</h4>
+                @Model.Specialization
+            </div>
+            <div class="form-group">
+                <h4>Data wizyty</h4>
+                @Methods.ConvertDateToDateWithoutTime(Model.VisitDate)
+            </div>
+            <div class="form-group">
+                <h4>Godzina wizyty</h4>
+                @Methods.ConvertIntToTimeString(Model.VisitTime)
+            </div>
+            <div class="form-group">
+                @Html.CheckBoxFor(m => m.IsReserved)
+                @Html.LabelFor(m => m.IsReserved)
+                @Html.ValidationMessageFor(m => m.IsReserved, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Zapisz</button>
+            </div>
+        }
+    </div>
+</div>

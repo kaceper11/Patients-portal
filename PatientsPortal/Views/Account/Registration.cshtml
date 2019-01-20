@@ -1,0 +1,105 @@
+﻿@using System.Web.UI.WebControls
+@model PatientsPortalModel.ViewModels.AccountViewModels.RegistrationViewModel
+@{
+    ViewBag.Title = "Rejestracja";
+    Layout = "~/Views/Shared/_BeforeLogin.cshtml"; 
+}
+
+
+@using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal show modal-registration" id="RegistrationModal" role="dialog">
+        <div class="modal-dialog modal-dialog-registration">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Rejestracja</h3>
+                </div>
+                <div class="modal-body modal-body-registration">
+                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName)
+                        @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName)
+                        @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.EditorFor(m => m.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email)
+                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MobileNumber)
+                        @Html.EditorFor(m => m.MobileNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BirthDate)
+                        <div class="input-group">
+                            @Html.EditorFor(m => m.BirthDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Gender)
+
+                        <div class="form-group">
+                            @Html.RadioButtonFor(m => m.Gender, "Mężczyzna")
+                            @Html.Label("Mężczyzna", new { htmlAttributes = new { @class = "radio-inline" } })
+                            @Html.RadioButtonFor(m => m.Gender, "Kobieta")
+                            @Html.Label("Kobieta", new { htmlAttributes = new { @class = "radio-inline" } })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Pesel)
+                        @Html.EditorFor(m => m.Pesel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.Pesel, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(model => model.TermsApproved)
+                        @Html.LabelFor(model => model.TermsApproved)
+                        @Html.ValidationMessageFor(model => model.TermsApproved, "", new { @class = "text-danger" })
+                        <br />
+                        @Html.ActionLink("Warunki użytkowania", "All", "Term")
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+                    </div>
+                    <div class="form-group">
+                        @Html.ActionLink("Zaloguj się", "Login")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script src="~/Scripts/modal.js"></script>

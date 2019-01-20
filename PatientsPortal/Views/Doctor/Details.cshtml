@@ -1,0 +1,69 @@
+﻿@using PatientsPortal.Methods
+@model PatientsPortalModel.ViewModels.DoctorViewModels.DoctorDetailsViewModel
+@{
+    ViewBag.Title = "Lekarze";
+}
+<div class="row page-box">
+    <div class="col-sm-8">
+        <div>
+            <h3>Imię i nazwisko: @Model.FirstName @Model.LastName</h3>
+        </div>
+        <div>
+            <h3>Specjalizacja: @Model.Specialization</h3>
+        </div>
+        <div>
+            <h3>Godziny pracy w tym miesiącu:</h3>
+            @(Html.Grid(Model.WorkHours.OrderBy(m => m.WorkDate))
+                    .Build(columns =>
+                    {
+                        columns.Add(model => model.WorkDate).Titled("Dzień pracy").Formatted("{0:dd/MM/yyyy}");
+                        columns.Add(model => Methods.ConvertIntToTimeString(model.StartTime)).Titled("Rozpoczęcie pracy");
+                        columns.Add(model => Methods.ConvertIntToTimeString(model.EndTime)).Titled("Zakończenie pracy");
+ 
+
+                    })
+                    .Empty("Brak wyników")
+                    .Filterable()
+                    .Sortable()
+                    .Pageable(
+                        pager =>
+                        {
+                            pager.PagesToDisplay = 3;
+                            pager.CurrentPage = 1;
+                            pager.RowsPerPage = 10;
+                        })
+                    )
+        </div>
+        
+
+
+    </div>
+    <div class="col-sm-4">
+        <div>
+            <div>
+                <label>Data stworzenia:</label>
+                <span>@Model.CreatedDate</span>
+            </div>
+            <div>
+                <label>Stworzone przez:</label>
+                <span>@Html.ActionLink(Model.CreatedBy,
+                          "Details", "User", new {id = Methods.GetUserIdByUserName(@Model.CreatedBy)}, null)</span>
+            </div>
+            @if (Model.ModifiedDate != null)
+            {
+                <div>
+                    <label>Data zmodyfikowania:</label>
+                    <span>@Model.ModifiedDate</span>
+                </div>
+            }
+            @if (Model.ModifiedBy != null)
+            {
+                <div>
+                    <label>Zmodyfikowane przez:</label>
+                    <span> @Html.ActionLink(Model.ModifiedBy,
+                        "Details", "User", new {id = Methods.GetUserIdByUserName(@Model.ModifiedBy)}, null)</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

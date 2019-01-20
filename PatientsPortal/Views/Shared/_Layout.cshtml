@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - PatientsPortal</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")   
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("PatientsPortal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Start", "Index", "Home")</li>
+
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Użytkownicy <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Nowy użytkownik", "Create", "User")</li>
+                                <li>@Html.ActionLink("Użytkownicy", "Index", "User")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || (Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor")))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lekarze <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Nowe godziny pracy", "Create", "WorkHour")</li>
+                                <li>@Html.ActionLink("Godziny pracy", "Index", "WorkHour")</li>
+                                @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                                {
+                                    <li>@Html.ActionLink("Lekarze", "Index", "Doctor")</li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient")
+                         || Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wizyty <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                                {
+                                    <li>@Html.ActionLink("Nowa wizyta", "Search", "Visit")</li>
+                                    <li>@Html.ActionLink("Wizyty", "Index", "Visit")</li>
+                                }
+                                @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+                                {
+                                    <li>@Html.ActionLink("Nowa wizyta", "Search", "Visit")</li>
+                                    <li>@Html.ActionLink("Historia wizyt", "Index", "Visit")</li>
+                                }
+                                @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor"))
+                                {
+                                    <li>@Html.ActionLink("Mój grafik", "Index", "Visit")</li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Registration")
+                         || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Badania <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Badania", "Index", "Examination")</li>
+                                <li>@Html.ActionLink("Badania - pliki", "Index", "ExaminationFile")</li>
+                                @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Registration"))
+                                {
+                                    <li>@Html.ActionLink("Nowe badanie", "Create", "Examination")</li>
+                                    <li>@Html.ActionLink("Nowe badanie - plik", "Upload", "ExaminationFile")</li>
+                                    <li>@Html.ActionLink("Nowa jednostka", "Create", "Unit")</li>
+                                    <li>@Html.ActionLink("Jednostki", "Index", "Unit")</li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Problemy <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Zgłoś problem", "Create", "Problem")</li>
+                                @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                                {
+                                    <li>@Html.ActionLink("Zgłoszone problemy", "Index", "Problem")</li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Registration")
+                         || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+                    {
+                        <li>@Html.ActionLink("Czat", "Index", "Chat")</li>
+                    }
+                    @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Warunki użytkowania <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Nowe warunki użytkowania", "Create", "Term")</li>
+                                <li> @Html.ActionLink("Warunki użytkowania", "Index", "Term")</li>
+                            </ul>
+                        </li>
+                    }
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Moje konto<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Zmień hasło", "ChangePassword", "User")</li>
+                            <li>@Html.ActionLink("Zmień dane osobowe", "ChangeUserData", "User")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Wyloguj", "LogOut", "Account")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/font-awesome")
+
+
+    <script>
+        $('.mvc-grid').mvcgrid();
+    </script>
+
+</html>

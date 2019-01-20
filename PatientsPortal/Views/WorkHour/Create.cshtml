@@ -1,0 +1,52 @@
+﻿@model PatientsPortalModel.ViewModels.WorkHoursViewModels.CreateWorkHourViewModel
+@{
+    ViewBag.Title = "Godziny pracy";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h2>Godziny pracy</h2>
+        @using (Html.BeginForm("Create"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+            if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Doctor)
+                    @Html.DropDownListFor(m => m.DoctorId,
+                        Model.Doctors.Select(c => new SelectListItem
+                        {
+                            Text = c.FirstName + " " + c.LastName + ", " + c.Specialization, Value = c.Id.ToString()
+                        }),
+                        new {@class = "form-control selectpicker", data_live_search = "true", data_size = "4"})
+                    @Html.ValidationMessageFor(m => m.DoctorId, "", new { @class = "text-danger" })
+                </div>
+            }
+            <div class="form-group">
+                @Html.LabelFor(m => m.WorkDate)
+                <div class="input-group">
+                    @Html.EditorFor(m => m.WorkDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                @Html.ValidationMessageFor(m => m.WorkDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StartTime)
+                @Html.EditorFor(m => m.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EndTime)
+                @Html.EditorFor(m => m.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </div>
+
+        }
+    </div>
+</div>

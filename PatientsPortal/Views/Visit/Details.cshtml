@@ -1,0 +1,64 @@
+﻿@using PatientsPortal.Methods
+@model PatientsPortalModel.ViewModels.VisitViewModels.VisitDetailsViewModel
+@{
+    ViewBag.Title = "Wizyty";
+}
+<div class="row page-box">
+    <div class="col-sm-8">
+        <div>
+            <h3>Imię i nazwisko pacjenta:</h3>
+            @Model.User.FirstName @Model.User.LastName
+        </div>
+        <div>
+            <h3>Imię i nazwisko lekarza:</h3>
+            @Model.Doctor.FirstName @Model.Doctor.LastName
+        </div>
+        <div>
+            <h3>Specjalizacja:</h3>
+            @Model.Doctor.Specialization
+        </div>
+        <div>
+            <h3>Data odbycia wizyty:</h3>
+            @Model.VisitDate
+        </div>
+        <div>
+            <h3>Godzina odbycia wizyty:</h3>
+            @Methods.ConvertIntToTimeString(Model.VisitTime)
+        </div>
+    </div>
+    @if ((Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator")))
+    {
+        <div class="col-sm-4">
+            <div>
+                <div>
+                    <label>Data stworzenia:</label>
+                    <span>@Model.CreatedDate</span>
+                </div>
+
+                <div>
+                    <label>Stworzone przez:</label>
+                    <span>@Model.CreatedBy</span>
+                </div>
+
+                @if (Model.ModifiedDate != null)
+                {
+                    <div>
+                        <label>Data zmodyfikowania:</label>
+                        <span>@Model.ModifiedDate</span>
+                    </div>
+                }
+
+                @if (Model.ModifiedBy != null)
+                {
+                    <div>
+                        <label>Zmodyfikowane przez:</label>
+                        <span>@Html.ActionLink(Model.ModifiedBy,
+                                  "Details", "User", new {id = Methods.GetUserIdByUserName(@Model.ModifiedBy)}, null)</span>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+
+</div>

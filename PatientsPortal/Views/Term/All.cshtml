@@ -1,0 +1,27 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.TermViewModels.TermsViewModel
+
+@{
+    ViewBag.Title = "Warunki użytkowania";
+    Layout = "~/Views/Shared/_BeforeLogin.cshtml";
+}
+
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h2>Warunki użytkowania</h2>
+        @Html.ActionLink("Zarejestruj się", "Registration", "Account", null, new { @class = "btn btn-primary" })
+
+        @foreach (var term in Model.Terms.OrderByDescending(p => p.CreatedDate))
+        {
+            <div class="row page-box">
+                <div class="col-sm-12">
+                    <h3>@term.Name</h3>
+                    <div class="form-group">
+                        @term.Description
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

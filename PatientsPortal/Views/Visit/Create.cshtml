@@ -1,0 +1,39 @@
+﻿@using PatientsPortal.Methods
+@model PatientsPortalModel.ViewModels.VisitViewModels.CreateVisitViewModel
+@{
+    ViewBag.Title = "Wizyty";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @using (Html.BeginForm("Create"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.DoctorId)
+            @Html.HiddenFor(m => m.VisitTime)
+            @Html.HiddenFor(m => m.VisitDate)
+            @Html.HiddenFor(m => m.Specialization)
+
+            <h3>Umawiasz następującą wizytę:</h3>
+            <div class="form-group">
+                <h3>Imię i nazwisko lekarza:</h3>
+                @Model.Doctor.FirstName @Model.Doctor.LastName
+            </div>
+            <div class="form-group">
+                <h3>Specjalizacja:</h3>
+                @Model.Doctor.Specialization
+            </div>
+            <div class="form-group">
+                <h3>Data odbycia wizyty:</h3>
+                @Methods.ConvertDateToDateWithoutTime(Model.VisitDate)
+            </div>
+            <div class="form-group">
+                <h3>Godzina odbycia wizyty:</h3>
+                @Methods.ConvertIntToTimeString(Model.VisitTime)
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Rezerwuj</button>
+            </div>
+        }
+    </div>
+</div>

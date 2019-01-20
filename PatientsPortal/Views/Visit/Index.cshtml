@@ -1,0 +1,69 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.VisitViewModels.VisitsViewModel
+@{
+    ViewBag.Title = "Wizyty";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["VisitCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["VisitCreated"]</p>
+        }
+        @if (TempData["VisitCancelled"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["VisitCancelled"]</p>
+        }
+        @if (TempData["VisitCantBeCancelled"] != null)
+        {
+            <p class="alert alert-warning" id="successMessage">@TempData["VisitCantBeCancelled"]</p>
+        }
+        
+        <h2>Wizyty</h2>
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+        {
+            @Html.ActionLink("Nowa wizyta", "Search", "Visit", new
+            {
+                @class = "btn btn-primary",
+                @style = "margin-bottom: 10px;"
+            })
+        }
+
+
+        @(Html.Grid(Model.Visits.OrderByDescending(v => v.VisitDate))
+                      .Build(columns =>
+                      {
+                          columns.Add(model => model.User.FirstName + ' ' + model.User.LastName).Titled("Pacjent");
+                          columns.Add(model => model.Doctor.FirstName + ' ' + model.Doctor.LastName).Titled("Lekarz");
+                          columns.Add(model => model.Specialization).Titled("Specjalizacja");
+                          columns.Add(model => model.VisitDate).Titled("Data").Formatted("{0:dd/MM/yyyy}");
+                          columns.Add(model => Methods.ConvertIntToTimeString(model.VisitTime)).Titled("Godzina");
+                          if ((Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator")
+                               || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+                              //&&  Model.Visits.Select(m => m.VisitDate).FirstOrDefault() > DateTime.Now.AddDays(1)
+                              )
+                          {
+                              columns.Add()
+                                  .RenderedAs(model => Html.ActionLink("Anuluj",
+                                      "Cancel", "Visit", new { id = model.Id }, null));
+                          }
+                          columns.Add()
+                              .RenderedAs(model => Html.ActionLink("Szczegóły",
+                                  "Details", "Visit", new { id = model.Id }, null));
+
+                      })
+                      .Empty("Brak wyników")
+                      .Filterable()
+                      .Sortable()
+                      .Pageable(
+                          pager =>
+                          {
+                              pager.PagesToDisplay = 3;
+                              pager.CurrentPage = 1;
+                              pager.RowsPerPage = 10;
+                          })
+                      .RowAttributed(model => new { data_id = model.Id })
+        )
+
+    </div>
+</div>

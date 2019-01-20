@@ -1,0 +1,57 @@
+﻿@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.UserViewModels.UsersViewModel
+@{
+    ViewBag.Title = "Użytkownicy";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["UserCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["UserCreated"]</p>
+        }
+        @if (TempData["UserUpdated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["UserUpdated"]</p>
+        }
+        <h2>Użytkownicy</h2>
+
+        @Html.ActionLink("Nowy użytkownik", "Create", "User", new
+        {
+            @class = "btn btn-primary",
+            @style = "margin-bottom: 10px;"
+        })
+
+        @(Html.Grid(Model.Users.OrderByDescending(u => u.CreatedDate))
+              .Build(columns =>
+              {
+
+                  columns.Add(model => model.FirstName + ' ' + model.LastName).Titled("Imię i nazwisko");
+                  columns.Add(model => model.MobileNumber).Titled("Numer telefonu");
+                  columns.Add(model => model.Email).Titled("Email");
+                  columns.Add(model => model.Pesel).Titled("Pesel");
+                  columns.Add(model => model.Roles.Select(r => r.RoleName).FirstOrDefault()).Titled("Rola");
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Edytuj",
+                          "Edit", "User", new {id = model.UserId}, null));
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Szczegóły",
+                          "Details", "User", new {id = model.UserId}, null));
+
+              })
+              .Empty("Brak wyników")
+              .Filterable()
+              .Sortable()
+              .Pageable(
+                  pager =>
+                  {
+                      pager.PagesToDisplay = 3;
+                      pager.CurrentPage = 1;
+                      pager.RowsPerPage = 10;
+                  })
+              .RowAttributed(model => new {data_id = model.UserId})
+              )
+
+
+
+    </div>
+</div>

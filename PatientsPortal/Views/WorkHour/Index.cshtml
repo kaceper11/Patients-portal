@@ -1,0 +1,62 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.WorkHoursViewModels.WorkHoursViewModel
+@{
+    ViewBag.Title = "Godziny pracy";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["WorkHourCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["WorkHourCreated"]</p>
+        }
+        @if (TempData["WorkHourUpdated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["WorkHourUpdated"]</p>
+        }
+        @if (TempData["WorkHourNotCreated"] != null)
+        {
+            <p class="alert alert-warning" id="warningMessage">@TempData["WorkHourNotCreated"]</p>
+        }
+        <h2>Godziny pracy lekarzy</h2>
+
+        @Html.ActionLink("Nowe godziny pracy", "Create", "WorkHour", new
+        {
+            @class = "btn btn-primary",
+            @style = "margin-bottom: 10px;"
+        })
+
+        @(Html.Grid(Model.WorkHours.OrderByDescending(m => m.WorkDate))
+              .Build(columns =>
+              {
+                  columns.Add(model => model.Doctor.FirstName + ' ' + model.Doctor.LastName).Titled("Lekarz");
+                  columns.Add(model => model.Doctor.Specialization).Titled("Specjalizacja");
+                  columns.Add(model => model.WorkDate).Titled("Dzień pracy").Formatted("{0:dd/MM/yyyy}");
+                  columns.Add(model => Methods.ConvertIntToTimeString(model.StartTime)).Titled("Rozpoczęcie pracy");
+                  columns.Add(model => Methods.ConvertIntToTimeString(model.EndTime)).Titled("Zakończenie pracy");
+                  if ((Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator")))
+                  {
+                      columns.Add()
+                          .RenderedAs(model => Html.ActionLink("Edytuj",
+                              "Edit", "WorkHour", new {id = model.Id}, null));
+                  }
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Szczegóły",
+                          "Details", "WorkHour", new {id = model.Id}, null));
+
+              })
+              .Empty("Brak wyników")
+              .Filterable()
+              .Sortable()
+              .Pageable(
+                  pager =>
+                  {
+                      pager.PagesToDisplay = 3;
+                      pager.CurrentPage = 1;
+                      pager.RowsPerPage = 20;
+                  })
+              .RowAttributed(model => new {data_id = model.Id})
+              )
+
+    </div>
+</div>

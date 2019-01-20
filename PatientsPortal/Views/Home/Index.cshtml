@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Start";
+}
+@if (TempData["ProblemCreated"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["ProblemCreated"]</p>
+}
+@if (TempData["PasswordChanged"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["PasswordChanged"]</p>
+}
+@if (TempData["UserDataChanged"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["UserDataChanged"]</p>
+}
+
+@if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+{
+    <div class="jumbotron col-md-4">
+        <h2>Użytkownicy</h2>
+        <p>@Html.ActionLink("Użytkownicy", "Index", "User", null, new { @class = "btn btn-primary" })</p>
+    </div>
+    <div class="jumbotron col-md-4">
+        <h2>Warunki użytkowania</h2>
+        <p>@Html.ActionLink("Warunki użytkowania", "Index", "Term", null, new { @class = "btn btn-primary" })</p>
+    </div>
+}
+
+@if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Registration")
+     || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+{
+    <div class="jumbotron col-md-4">
+        <h2>Badania</h2>
+        <p>@Html.ActionLink("Badania", "Index", "Examination", null, new { @class = "btn btn-primary" })</p>
+        <p>@Html.ActionLink("Badania - pliki", "Index", "ExaminationFile", null, new { @class = "btn btn-primary" })</p>
+    </div>
+}
+
+@if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || (Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor")))
+{
+    <div class="jumbotron col-md-4">
+        <h2>Lekarze</h2>
+        <p>@Html.ActionLink("Godziny pracy", "Index", "WorkHour", null, new { @class = "btn btn-primary" })</p>
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+        {
+            <p>@Html.ActionLink("Lekarze", "Index", "Doctor", null, new { @class = "btn btn-primary" })</p>
+        }
+    </div>
+}
+@if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient")
+     || Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor"))
+{
+    <div class="jumbotron col-md-4">
+        <h2>Wizyty</h2>
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+        {
+            <p>@Html.ActionLink("Nowa wizyta", "Search", "Visit", null, new { @class = "btn btn-primary" })</p>
+            <p>@Html.ActionLink("Wizyty", "Index", "Visit", null, new { @class = "btn btn-primary" })</p>
+        }
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+        {
+            <p>@Html.ActionLink("Nowa wizyta", "Search", "Visit", null, new { @class = "btn btn-primary" })</p>
+            <p>@Html.ActionLink("Historia wizyt", "Index", "Visit", null, new { @class = "btn btn-primary" })</p>
+        }
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor"))
+        {
+            <p>@Html.ActionLink("Mój grafik", "Index", "Visit", null, new { @class = "btn btn-primary" })</p>
+        }
+    </div>
+}
+
+@if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator") || Roles.IsUserInRole(Membership.GetUser().UserName, "Patient"))
+{
+    <div class="jumbotron col-md-4">
+        <h2>Problemy</h2>
+        <p>@Html.ActionLink("Zgłoś problem", "Create", "Problem", null, new { @class = "btn btn-primary" })</p>
+        @if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+        {
+            <p>@Html.ActionLink("Zgłoszone problemy", "Index", "Problem", null, new { @class = "btn btn-primary" })</p>
+        }
+    </div>
+}
+
+@if (!Roles.IsUserInRole(Membership.GetUser().UserName, "Doctor"))
+{
+    <div class="jumbotron col-md-4">
+        <h2>Czat</h2>
+        <p>@Html.ActionLink("Czat", "Index", "Chat", null, new { @class = "btn btn-primary" })</p>
+    </div>
+}

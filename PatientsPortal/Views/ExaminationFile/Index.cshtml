@@ -1,0 +1,54 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.ExaminationFileViewModels.ExaminationFilesViewModel
+@{
+    ViewBag.Title = "Badania - pliki";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["ExaminationFileCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["ExaminationFileCreated"]</p>
+        }
+        @if (TempData["ExaminationFileNotCreated"] != null)
+        {
+            <p class="alert alert-warning" id="warningMessage">@TempData["ExaminationFileNotCreated"]</p>
+        }
+        <h2>Badania - pliki</h2>
+
+        @Html.ActionLink("Nowe badanie - plik", "Upload", "Examination", new
+        {
+            @class = "btn btn-primary",
+            style = "margin-bottom: 10px;"
+        })
+
+        @(Html.Grid(Model.ExaminationFiles)
+                      .Build(columns =>
+                      {
+                          columns.Add(model => model.User.FirstName + ' ' + model.User.LastName)
+                              .Titled("Pacjent");
+                          columns.Add(model => model.FileName).Titled("Nazwa badania");
+                          columns.Add(model => model.Comment).Titled("Komentarz");
+                          if (Roles.IsUserInRole(Membership.GetUser().UserName, "Administrator"))
+                          {
+                              columns.Add(model => model.CreatedDate).Titled("Data dodania").Formatted("{0:dd/MM/yyyy}");
+                          }
+                          columns.Add()
+                              .RenderedAs(model => Html.ActionLink("Pobierz",
+                                  "Download", "ExaminationFile", new { id = model.Id }, null));
+                      })
+                      .Empty("Brak wyników")
+                      .Filterable()
+                      .Sortable()
+                      .Pageable(
+                          pager =>
+                          {
+                              pager.PagesToDisplay = 3;
+                              pager.CurrentPage = 1;
+                              pager.RowsPerPage = 10;
+                          })
+                      .RowAttributed(model => new { data_id = model.Id })
+        )
+
+    </div>
+</div>

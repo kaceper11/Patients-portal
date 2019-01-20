@@ -1,0 +1,54 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.TermViewModels.TermsViewModel
+@{
+    ViewBag.Title = "Warunki użytkowania";
+} 
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["TermCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["TermCreated"]</p>
+        }
+        @if (TempData["TermUpdated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["TermUpdated"]</p>
+        }
+        <h2>Warunki użytkowania</h2>
+
+        @Html.ActionLink("Nowe warunki użytkowania", "Create", "Term", new
+        {
+            @class = "btn btn-primary",
+            @style = "margin-bottom: 10px;"
+        })
+
+
+        @(Html.Grid(Model.Terms)
+              .Build(columns =>
+              {
+                  columns.Add(model => model.Name).Titled("Nazwa");
+                  columns.Add(model => model.CreatedDate).Titled("Data stworzenia").Formatted("{0:dd/MM/yyyy}");
+                  columns.Add(model => model.ModifiedDate).Titled("Data zmodyfikowania").Formatted("{0:dd/MM/yyyy}");
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Edytuj",
+                          "Edit", "Term", new {id = model.Id}, null));
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Szczegóły",
+                          "Details", "Term", new {id = model.Id}, null));
+
+              })
+              .Empty("Brak wyników")
+              .Filterable()
+              .Sortable()
+              .Pageable(
+                  pager =>
+                  {
+                      pager.PagesToDisplay = 3;
+                      pager.CurrentPage = 1;
+                      pager.RowsPerPage = 10;
+                  })
+              .RowAttributed(model => new {data_id = model.Id})
+              )
+
+    </div>
+</div>

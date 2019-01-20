@@ -1,0 +1,43 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.DoctorViewModels.DoctorsViewModel
+@{
+    ViewBag.Title = "Lekarze";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["DoctorUpdated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["DoctorUpdated"]</p>
+        }
+        <h2>Lekarze</h2>
+
+        @(Html.Grid(Model.Doctors.OrderBy(m => m.User.LastName))
+              .Build(columns =>
+              {
+                  columns.Add(model => model.FirstName + ' ' + model.LastName).Titled("Imię i nazwisko");
+                  columns.Add(model => model.Specialization).Titled("Specjalizacja");
+                  columns.Add(model => model.CreatedDate).Titled("Data stworzenia").Formatted("{0:dd/MM/yyyy}");
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Edytuj",
+                          "Edit", "Doctor", new {id = model.Id}, null));
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Szczegóły",
+                          "Details", "Doctor", new {id = model.Id}, null));
+
+              })
+              .Empty("Brak wyników")
+              .Filterable()
+              .Sortable()
+              .Pageable(
+                  pager =>
+                  {
+                      pager.PagesToDisplay = 3;
+                      pager.CurrentPage = 1;
+                      pager.RowsPerPage = 10;
+                  })
+              .RowAttributed(model => new {data_id = model.Id})
+              )
+
+    </div>
+</div>

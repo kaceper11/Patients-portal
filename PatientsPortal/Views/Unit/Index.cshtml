@@ -1,0 +1,57 @@
+﻿@using PatientsPortal.Methods
+@using PatientsPortalModel.Entities
+@model PatientsPortalModel.ViewModels.UnitViewModels.UnitsViewModel
+@{
+    ViewBag.Title = "Jednostki";
+}
+<div class="row page-box">
+    <div class="col-sm-12">
+        @if (TempData["UnitCreated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["UnitCreated"]</p>
+        }
+        @if (TempData["UnitUpdated"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["UnitUpdated"]</p>
+        }
+        @if (TempData["UnitDeleted"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["UnitDeleted"]</p>
+        }
+        <h2>Jednostki</h2>
+
+        @Html.ActionLink("Nowa jednostka", "Create", "Unit", new
+        {
+            @class = "btn btn-primary",
+            @style = "margin-bottom: 10px;"
+        })
+
+
+        @(Html.Grid(Model.Units)
+              .Build(columns =>
+              {
+                  columns.Add(model => model.Value).Titled("Wartość");
+                  columns.Add(model => model.CreatedDate).Titled("Data stworzenia").Formatted("{0:dd/MM/yyyy}");
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Edytuj",
+                          "Edit", "Unit", new {id = model.Id}, null));
+                  columns.Add()
+                      .RenderedAs(model => Html.ActionLink("Szczegóły",
+                          "Details", "Unit", new {id = model.Id}, null));
+
+              })
+              .Empty("Brak wyników")
+              .Filterable()
+              .Sortable()
+              .Pageable(
+                  pager =>
+                  {
+                      pager.PagesToDisplay = 3;
+                      pager.CurrentPage = 1;
+                      pager.RowsPerPage = 10;
+                  })
+              .RowAttributed(model => new {data_id = model.Id})
+              )
+
+    </div>
+</div>

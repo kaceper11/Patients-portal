@@ -1,0 +1,79 @@
+﻿@model PatientsPortalModel.ViewModels.ExaminationViewModels.CreateExaminationViewModel
+@{
+    ViewBag.Title = "Badania";
+}
+
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h2>Nowe badanie</h2>
+        @using (Html.BeginForm("Create"))
+        {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserId)
+            @Html.DropDownListFor(m => m.UserId,
+                Model.Users.Select(c => new SelectListItem
+                {
+                    Text = c.FirstName + " " + c.LastName + ", " + c.Pesel, Value = c.UserId.ToString()
+                }),
+                new { @class = "form-control selectpicker", data_live_search = "true", data_size = "4" })
+            @Html.ValidationMessageFor(m => m.UserId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.DoctorId)
+            @Html.DropDownListFor(m => m.DoctorId,
+                Model.Doctors.Select(c => new SelectListItem
+                {
+                    Text = c.FirstName + " " + c.LastName + ", " + c.Specialization, Value = c.Id.ToString()
+                }),
+                new { @class = "form-control selectpicker", data_live_search = "true", data_size = "4" })
+            @Html.ValidationMessageFor(m => m.DoctorId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ExaminationDate)
+            <div class="input-group">
+                @Html.EditorFor(m => m.ExaminationDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(m => m.ExaminationDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ExaminationName)
+            @Html.EditorFor(m => m.ExaminationName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.ExaminationName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Result)
+            @Html.EditorFor(m => m.Result, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Result, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.UnitId)
+            @Html.DropDownListFor(m => m.UnitId,
+                Model.Units.Select(c => new SelectListItem
+                {
+                    Text = c.Value, Value = c.Id.ToString()
+                }), 
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.UnitId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Norm)
+            @Html.EditorFor(m => m.Norm, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Norm, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Opis..." })
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+        </div>
+
+}
+    </div>
+</div>

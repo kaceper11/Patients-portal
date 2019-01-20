@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56048CE9-90B3-4AAB-94F6-A3C604B20EBE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PatientsPortalModel</RootNamespace>
+    <AssemblyName>PatientsPortalModel</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.1.0.9, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.MappingAPI.6.1.0.9\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PusherServer, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PusherServer.4.1.0\lib\net45\PusherServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TrackerEnabledDbContext, Version=3.6.1.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
+      <HintPath>..\packages\TrackerEnabledDbContext.3.6.1\lib\net45\TrackerEnabledDbContext.dll</HintPath>
+    </Reference>
+    <Reference Include="TrackerEnabledDbContext.Common, Version=3.6.1.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
+      <HintPath>..\packages\TrackerEnabledDbContext.Common.3.6.1\lib\net45\TrackerEnabledDbContext.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Conversation.cs" />
+    <Compile Include="Entities\Doctor.cs" />
+    <Compile Include="Entities\Examination.cs" />
+    <Compile Include="Entities\ExaminationFile.cs" />
+    <Compile Include="Entities\Problem.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\Term.cs" />
+    <Compile Include="Entities\Unit.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Visit.cs" />
+    <Compile Include="Entities\WorkHour.cs" />
+    <Compile Include="Migrations\201805211843217_Init.cs" />
+    <Compile Include="Migrations\201805211843217_Init.Designer.cs">
+      <DependentUpon>201805211843217_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806141415207_DoctorWorkHoursAreNullable.cs" />
+    <Compile Include="Migrations\201806141415207_DoctorWorkHoursAreNullable.Designer.cs">
+      <DependentUpon>201806141415207_DoctorWorkHoursAreNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806161333281_termTableAddedUserModified.cs" />
+    <Compile Include="Migrations\201806161333281_termTableAddedUserModified.Designer.cs">
+      <DependentUpon>201806161333281_termTableAddedUserModified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806171543006_addedWorkHoursTable.cs" />
+    <Compile Include="Migrations\201806171543006_addedWorkHoursTable.Designer.cs">
+      <DependentUpon>201806171543006_addedWorkHoursTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806231412085_termsApprovedDateAdded.cs" />
+    <Compile Include="Migrations\201806231412085_termsApprovedDateAdded.Designer.cs">
+      <DependentUpon>201806231412085_termsApprovedDateAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807061634311_examinationDateNullable.cs" />
+    <Compile Include="Migrations\201807061634311_examinationDateNullable.Designer.cs">
+      <DependentUpon>201807061634311_examinationDateNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807061644061_makeDatesNullable.cs" />
+    <Compile Include="Migrations\201807061644061_makeDatesNullable.Designer.cs">
+      <DependentUpon>201807061644061_makeDatesNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071011592_updateExaminationsTable.cs" />
+    <Compile Include="Migrations\201807071011592_updateExaminationsTable.Designer.cs">
+      <DependentUpon>201807071011592_updateExaminationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071157400_deletedPatientsTable.cs" />
+    <Compile Include="Migrations\201807071157400_deletedPatientsTable.Designer.cs">
+      <DependentUpon>201807071157400_deletedPatientsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071457201_filesTableAdded.cs" />
+    <Compile Include="Migrations\201807071457201_filesTableAdded.Designer.cs">
+      <DependentUpon>201807071457201_filesTableAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071613295_changeFilesTableToExamiantionTables.cs" />
+    <Compile Include="Migrations\201807071613295_changeFilesTableToExamiantionTables.Designer.cs">
+      <DependentUpon>201807071613295_changeFilesTableToExamiantionTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807071630246_addedCOlumnCommnetToExaminationFilesTable.cs" />
+    <Compile Include="Migrations\201807071630246_addedCOlumnCommnetToExaminationFilesTable.Designer.cs">
+      <DependentUpon>201807071630246_addedCOlumnCommnetToExaminationFilesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807081305527_changedFileModel.cs" />
+    <Compile Include="Migrations\201807081305527_changedFileModel.Designer.cs">
+      <DependentUpon>201807081305527_changedFileModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807141528077_addedConversationsTable.cs" />
+    <Compile Include="Migrations\201807141528077_addedConversationsTable.Designer.cs">
+      <DependentUpon>201807141528077_addedConversationsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807201631079_nullablecolumnExFile.cs" />
+    <Compile Include="Migrations\201807201631079_nullablecolumnExFile.Designer.cs">
+      <DependentUpon>201807201631079_nullablecolumnExFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807201632544_notnullablecolumnExFile.cs" />
+    <Compile Include="Migrations\201807201632544_notnullablecolumnExFile.Designer.cs">
+      <DependentUpon>201807201632544_notnullablecolumnExFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807201948053_changedModels.cs" />
+    <Compile Include="Migrations\201807201948053_changedModels.Designer.cs">
+      <DependentUpon>201807201948053_changedModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807202044258_nullableforeignkeys.cs" />
+    <Compile Include="Migrations\201807202044258_nullableforeignkeys.Designer.cs">
+      <DependentUpon>201807202044258_nullableforeignkeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807262145242_auditLogsAdded.cs" />
+    <Compile Include="Migrations\201807262145242_auditLogsAdded.Designer.cs">
+      <DependentUpon>201807262145242_auditLogsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="PatientsPortalContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AccountViewModels\CustomSerializeModel.cs" />
+    <Compile Include="ViewModels\AccountViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\AccountViewModels\RegistrationViewModel.cs" />
+    <Compile Include="ViewModels\DoctorViewModels\DoctorDetailsViewModel.cs" />
+    <Compile Include="ViewModels\DoctorViewModels\DoctorsViewModel.cs" />
+    <Compile Include="ViewModels\DoctorViewModels\EditDoctorViewModel.cs" />
+    <Compile Include="ViewModels\ExaminationViewModels\CreateExaminationViewModel.cs" />
+    <Compile Include="ViewModels\ExaminationViewModels\EditExaminationViewModel.cs" />
+    <Compile Include="ViewModels\ExaminationViewModels\ExaminationDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ExaminationViewModels\ExaminationsViewModel.cs" />
+    <Compile Include="ViewModels\ExaminationFileViewModels\ExaminationFileDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ExaminationFileViewModels\ExaminationFilesViewModel.cs" />
+    <Compile Include="ViewModels\ProblemViewModels\CreateProblemViewModel.cs" />
+    <Compile Include="ViewModels\ProblemViewModels\EditProblemViewModel.cs" />
+    <Compile Include="ViewModels\ProblemViewModels\ProblemDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ProblemViewModels\ProblemsViewModel.cs" />
+    <Compile Include="ViewModels\TermViewModels\CreateTermViewModel.cs" />
+    <Compile Include="ViewModels\TermViewModels\EditTermViewModel.cs" />
+    <Compile Include="ViewModels\TermViewModels\TermDetailsViewModel.cs" />
+    <Compile Include="ViewModels\TermViewModels\TermsViewModel.cs" />
+    <Compile Include="ViewModels\UnitViewModels\CreateUnitViewModel.cs" />
+    <Compile Include="ViewModels\UnitViewModels\EditUnitViewModel.cs" />
+    <Compile Include="ViewModels\UnitViewModels\UnitDetailsViewModel.cs" />
+    <Compile Include="ViewModels\UnitViewModels\UnitsViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\ChangeUserDataViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UserDetailsViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UsersViewModel.cs" />
+    <Compile Include="ViewModels\VisitViewModels\CreateVisitViewModel.cs" />
+    <Compile Include="ViewModels\VisitViewModels\CancelVisitViewModel.cs" />
+    <Compile Include="ViewModels\VisitViewModels\SearchVisitViewModel.cs" />
+    <Compile Include="ViewModels\VisitViewModels\VisitDetailsViewModel.cs" />
+    <Compile Include="ViewModels\VisitViewModels\VisitsViewModel.cs" />
+    <Compile Include="ViewModels\WorkHoursViewModels\CreateWorkHourViewModel.cs" />
+    <Compile Include="ViewModels\WorkHoursViewModels\EditWorkHourViewModel.cs" />
+    <Compile Include="ViewModels\WorkHoursViewModels\WorkHourDetailsViewModel.cs" />
+    <Compile Include="ViewModels\WorkHoursViewModels\WorkHoursViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805211843217_Init.resx">
+      <DependentUpon>201805211843217_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806141415207_DoctorWorkHoursAreNullable.resx">
+      <DependentUpon>201806141415207_DoctorWorkHoursAreNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806161333281_termTableAddedUserModified.resx">
+      <DependentUpon>201806161333281_termTableAddedUserModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806171543006_addedWorkHoursTable.resx">
+      <DependentUpon>201806171543006_addedWorkHoursTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806231412085_termsApprovedDateAdded.resx">
+      <DependentUpon>201806231412085_termsApprovedDateAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807061634311_examinationDateNullable.resx">
+      <DependentUpon>201807061634311_examinationDateNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807061644061_makeDatesNullable.resx">
+      <DependentUpon>201807061644061_makeDatesNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071011592_updateExaminationsTable.resx">
+      <DependentUpon>201807071011592_updateExaminationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071157400_deletedPatientsTable.resx">
+      <DependentUpon>201807071157400_deletedPatientsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071457201_filesTableAdded.resx">
+      <DependentUpon>201807071457201_filesTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071613295_changeFilesTableToExamiantionTables.resx">
+      <DependentUpon>201807071613295_changeFilesTableToExamiantionTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807071630246_addedCOlumnCommnetToExaminationFilesTable.resx">
+      <DependentUpon>201807071630246_addedCOlumnCommnetToExaminationFilesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807081305527_changedFileModel.resx">
+      <DependentUpon>201807081305527_changedFileModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807141528077_addedConversationsTable.resx">
+      <DependentUpon>201807141528077_addedConversationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807201631079_nullablecolumnExFile.resx">
+      <DependentUpon>201807201631079_nullablecolumnExFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807201632544_notnullablecolumnExFile.resx">
+      <DependentUpon>201807201632544_notnullablecolumnExFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807201948053_changedModels.resx">
+      <DependentUpon>201807201948053_changedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807202044258_nullableforeignkeys.resx">
+      <DependentUpon>201807202044258_nullableforeignkeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807262145242_auditLogsAdded.resx">
+      <DependentUpon>201807262145242_auditLogsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
